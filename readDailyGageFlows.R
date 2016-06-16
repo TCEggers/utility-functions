@@ -45,7 +45,7 @@ if(!("package:dplyr" %in% search())) {
     suppressMessages(library(dplyr))
 }
 
-readMeanGageFlows <- function(station_sensor_list = NA,
+readDailyGageFlows <- function(station_sensor_list = NA,
                           start_date = "2015-10-01",
                           end_date = "Now",
                           save_csv = TRUE) {

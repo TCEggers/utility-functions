@@ -152,14 +152,14 @@ readDailyGageFlows <- function(station_sensor_list = NA,
         gather(variable, value, -date, -station_id) %>%
         select(date, station_id, variable, value)
     
+    cat("\nWeb scrape complete.\n\n")
+    
     if(save_csv){
         if(!file.exists("./Daily_Gage_Flow_Downloads")) dir.create("./Daily_Gage_Flow_Downloads")
         fileDest <- sprintf("./Daily_Gage_Flow_Downloads/Gage_Flows_%s.csv", 
-                            format(Sys.time(),"%Y_%m_%d_%H_%M"))
+                            format(Sys.time(),"%Y%m%d_%H%M"))
         write.csv(daily_gage_flows, fileDest, row.names = FALSE)
-        cat("Data file save to ",fileDest,"\n\n")
+        cat("\nData file saved to ",fileDest,"\n\n")
     }
-    cat("Web scrape complete.\n")
-    
     return(daily_gage_flows)
 }

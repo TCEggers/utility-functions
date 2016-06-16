@@ -96,14 +96,14 @@ readDailyFNFs <- function(station_list = c("BND", "ORO", "YRS", "FOL", "MHB",
     # Tidy data frame:
     daily_fnfs <- daily_fnfs %>% gather(variable, value, -date, -station_id)
     
-    cat("CDEC Daily FNF webscrape complete.\n")
+    cat("CDEC Daily FNF webscrape complete.\n\n")
     
     if(save_csv){
         if(!file.exists("./Daily_FNF_Downloads")) dir.create("./Daily_FNF_Downloads")
         fileDest <- sprintf("./Daily_FNF_Downloads/Daily_FNFs_%s.csv", 
                             format(Sys.time(),"%Y%m%d_%H%M"))
         write.csv(daily_fnfs, fileDest, row.names = FALSE)
-        cat("Data file save to ",fileDest,"\n\n")
+        cat("Data file saved to ",fileDest,"\n\n")
     }
     
     return(daily_fnfs)

@@ -1,6 +1,6 @@
 ##' readDailyGageFlows
-##' Version: 1.1
-##' Modified: 2016-06-16
+##' Version: 1.2
+##' Modified: 2016-07-15
 ##'
 ##' Scrapes and returns daily gage flow data in cubic feet per second (cfs) from
 ##' DWR's CDEC web site for stations passed to the function in the
@@ -29,9 +29,11 @@
 ##'     value: value of the measurement variable.
 ##'
 ##' Changes:
+##'   2016-07-15: Added code to convert missing values reported as '-9998'
+##'               to NAs
+##'   2016-06-16: Renamed function to readDailyGageFlows
 ##'   2016-06-09: Converted variable names to lower-case_underscore style
 ##'               Rewrote code so that resulting data frame is tidy-long
-##'   2016-06-16: Renamed function to readDailyGageFlows
 ##'
 
 # Load required libraries during source if not yet loaded ----
@@ -141,6 +143,9 @@ readDailyGageFlows <- function(station_sensor_list = NA,
 
     gage_flows <- bind_rows(gage_flows)
     gage_flows$date <- as.Date(as.character(gage_flows$date), "%Y%m%d")
+
+    # Missing values are flagged by '-9998' in CDEC data. Convert to NAs:
+    gage_flows[, 4][gage_flows[, 4] == -9998] <- NA
 
     daily_gage_flows <- gage_flows %>%
         group_by(station_id, date) %>%
